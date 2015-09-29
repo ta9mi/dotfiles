@@ -21,6 +21,7 @@ NeoBundle 'hail2u/vim-css3-syntax'
 NeoBundle 'heavenshell/vim-jsdoc'
 NeoBundle 'jelera/vim-javascript-syntax'
 NeoBundle 'kannokanno/previm'
+NeoBundle 'Lokaltog/powerline', {'rtp' : 'powerline/bindings/vim'}
 NeoBundle 'majutsushi/tagbar'
 NeoBundle 'mattn/jscomplete-vim'
 NeoBundle 'mattn/zencoding-vim'
@@ -64,11 +65,7 @@ set showcmd
 set cmdheight=1
 " 色系の指定
 set t_Co=256
-if has('gui_running')
-    set background=light
-else
-    set background=dark
-endif
+set background=dark
 colorscheme solarized
 let g:solarized_termcolors=256
 let g:solarized_termtrans = 1
@@ -173,9 +170,7 @@ inoremap <expr><C-l>     neocomplete#complete_common_string()
 " <CR>: close popup and save indent.
 inoremap <silent> <CR> <C-r>=<SID>my_cr_function()<CR>
 function! s:my_cr_function()
-  return "\<C-y>\<CR>"
-  " For no inserting <CR> key.
-  "return pumvisible() ? "\<C-y>" : "\<CR>"
+  return pumvisible() ? "\<C-y>" : "\<CR>"
 endfunction
 " <TAB>: completion.
 inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
@@ -251,3 +246,6 @@ let g:jsdoc_allow_input_prompt = 1
 let g:jsdoc_additional_descriptions = 1
 let g:jsdoc_default_mapping = 0
 nnoremap <silent> ,d :JsDoc<CR>
+
+" for vim-powerline
+let g:Powerline_symbols = 'fancy'
