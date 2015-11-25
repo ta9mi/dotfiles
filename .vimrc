@@ -13,6 +13,7 @@ NeoBundleFetch 'Shougo/neobundle.vim'
 " install plugins
 NeoBundle 'altercation/vim-colors-solarized'
 NeoBundle 'cakebaker/scss-syntax.vim'
+NeoBundle 'chaquotay/ftl-vim-syntax'
 NeoBundle 'ctrlpvim/ctrlp.vim'
 NeoBundle 'digitaltoad/vim-jade'
 NeoBundle 'elzr/vim-json'
@@ -24,7 +25,7 @@ NeoBundle 'kannokanno/previm'
 NeoBundle 'Lokaltog/powerline', {'rtp' : 'powerline/bindings/vim'}
 NeoBundle 'majutsushi/tagbar'
 NeoBundle 'mattn/jscomplete-vim'
-NeoBundle 'mattn/zencoding-vim'
+NeoBundle 'mattn/emmet-vim'
 NeoBundle 'mxw/vim-jsx'
 NeoBundle 'othree/html5.vim'
 NeoBundle 'othree/javascript-libraries-syntax.vim'
@@ -34,8 +35,16 @@ NeoBundle 'Shougo/neocomplete.vim'
 NeoBundle 'Shougo/neomru.vim'
 NeoBundle 'Shougo/unite.vim'
 NeoBundle 'Shougo/vimfiler.vim'
-NeoBundle 'Shougo/vimproc'
+NeoBundle 'Shougo/vimproc', {
+      \ 'build' : {
+      \     'windows' : 'make -f make_mingw32.mak',
+      \     'cygwin' : 'make -f make_cygwin.mak',
+      \     'mac' : 'make -f make_mac.mak',
+      \     'unix' : 'make -f make_unix.mak',
+      \   },
+      \ }
 NeoBundle 'Shougo/vimshell'
+NeoBundle 'sudo.vim'
 NeoBundle 'Townk/vim-autoclose'
 NeoBundle 'tpope/vim-endwise'
 NeoBundle 'tyru/open-browser.vim'
@@ -55,10 +64,6 @@ endif
 set sessionoptions+=resize,tabpages
 " ステータスライン
 set laststatus=2 " 常にステータスラインを表示
-set statusline=%<%F\ %r%h%w%y%{'['.(&fenc!=''?&fenc:&c).']['.&ff.']'}%{fugitive#statusline()}%=%4v(ASCII=%03.3b,HEX=%02.2B)\ %l/%L(%P)%m
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
 " コマンドをステータスラインに表示する
 set showcmd
 " コマンドラインの高さ
@@ -78,6 +83,7 @@ set number
 set matchtime=3
 " 折りたたみ有効
 set foldmethod=marker
+"nnoremap <Esc><Esc> :nohlsearch<CR>
 " 折り返しあり
 set wrap
 " タブとか改行を表示する
@@ -96,6 +102,27 @@ set smartindent
 set indentexpr
 " バックスペースでインデントや改行を削除できるようにする
 set backspace=2
+" パフォーマンス対策
+if !has('gui_running')
+  set lazyredraw
+  set ttyfast
+endif
+" 全角スペースをハイライト
+if has("syntax")
+  syntax on
+  function! ActivateInvisibleIndicator()
+    syntax match InvisibleJISX0208Space "　" display containedin=ALL
+    highlight InvisibleJISX0208Space term=underline ctermbg=Cyan guibg=Cyan
+    "syntax match InvisibleTrailedSpace "[ \t]\+$" display containedin=ALL
+    "highlight InvisibleTrailedSpace term=underline ctermbg=Red guibg=Red
+    "syntax match InvisibleTab "\t" display containedin=ALL
+    "highlight InvisibleTab term=underline ctermbg=Cyan guibg=Cyan
+  endf
+  augroup invisible
+    autocmd! invisible
+    autocmd BufNew,BufRead * call ActivateInvisibleIndicator()
+  augroup END
+endif
 " カーソルの回り込みを可能にする
 "set whichwrap=b,s,[,],<,>
 " ヤンクをクリップボードへ送り込む
@@ -120,6 +147,20 @@ nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
+
+" for ftl syntax
+au BufRead,BufNewFile *.ftl set filetype=ftl
+
+" for jq
+command! -nargs=? Jq call s:Jq(<f-args>)
+function! s:Jq(...)
+  if 0 == a:0
+    let l:arg = "."
+  else
+    let l:arg = a:1
+  endif
+  execute "%! jq 95fe1a73-e2e2-4737-bea1-a44257c50fc8quot;" . l:arg . "95fe1a73-e2e2-4737-bea1-a44257c50fc8quot;"
+endfunction
 
 "unite.vim
 nnoremap    [unite]   <Nop>
@@ -180,7 +221,7 @@ inoremap <expr><BS> neocomplete#smart_close_popup()."\<C-h>"
 " Close popup by <Space>.
 inoremap <expr><Space> pumvisible() ? "\<C-y>" : "\<Space>"
 " AutoComplPop like behavior.
-"let g:neocomplete#enable_auto_select = 1
+let g:neocomplete#enable_auto_select = 1
 " Enable omni completion.
 autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
 autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
@@ -207,7 +248,7 @@ autocmd BufReadPre *.js let b:javascript_lib_use_requirejs = 1
 autocmd BufReadPre *.js let b:javascript_lib_use_jasmine = 0
 
 " for syntastic
-let g:syntastic_javascript_checkers = ['jsxhint', 'jshint']
+let g:syntastic_javascript_checkers = ['jshint']
 
 " for tagbar.vim
 nnoremap <silent> <F9> :TagbarToggle<CR>
@@ -216,31 +257,20 @@ nnoremap <silent> <F9> :TagbarToggle<CR>
 " ダブルクォート隠しを無効にする
 let g:vim_json_syntax_conceal = 0
 
+" JSON beautifier
+map <Leader>jb !python -m json.tool<CR>
+
 " for markdown
 au BufRead,BufNewFile *.md set filetype=markdown
 
-" for zencoding-vim
-let g:user_zen_settings = {
-      \ 'lang': 'ja',
-      \ 'html': {
-      \       'indentation' : '  ',
-      \   'snippets': {
-      \   'flash': "<object data=\"${cursor}\""
-      \        ." type=\"application/x-shockwave-flash\""
-      \        ." id=\"\" width=\"\" height=\"\">"
-      \        ." <param name=\"movie\" value=\"\" />\n</object>",
-      \   },
-      \ },
-      \ 'css': {
-      \   'filters': 'fc',
-      \ },
-      \ 'php': {
-      \   'extends': 'html',
-      \   'filters': 'html,c',
-      \ },
-      \}
-let g:use_zen_complete_tag = 1
-l
+" for emmet-vim
+let g:user_emmet_mode = 'iv'
+let g:user_emmet_leader_key = '<C-Y>'
+let g:use_emmet_complete_tag = 1
+let g:user_emmet_settings = {
+      \   'lang' : 'ja'
+      \ }
+
 " for vim-jsdoc.vim
 let g:jsdoc_allow_input_prompt = 1
 let g:jsdoc_additional_descriptions = 1
