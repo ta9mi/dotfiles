@@ -16,6 +16,7 @@ NeoBundle 'cakebaker/scss-syntax.vim'
 NeoBundle 'chaquotay/ftl-vim-syntax'
 NeoBundle 'ctrlpvim/ctrlp.vim'
 NeoBundle 'digitaltoad/vim-jade'
+NeoBundle 'editorconfig/editorconfig-vim'
 NeoBundle 'elzr/vim-json'
 NeoBundle 'hail2u/vim-css-syntax'
 NeoBundle 'hail2u/vim-css3-syntax'
@@ -55,7 +56,7 @@ call neobundle#end()
 filetype plugin indent on
 
 NeoBundleCheck
-"
+
 " PATHの設定
 if has('gui_running')
   let $PATH = '/usr/local/sbin:/usr/local/bin:/usr/local/share/npm/bin:/usr/local/share/python:' . $PATH
