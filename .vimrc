@@ -27,6 +27,7 @@ NeoBundle 'Lokaltog/powerline', {'rtp' : 'powerline/bindings/vim'}
 NeoBundle 'majutsushi/tagbar'
 NeoBundle 'mattn/jscomplete-vim'
 NeoBundle 'mattn/emmet-vim'
+NeoBundle 'millermedeiros/vim-esformatter'
 NeoBundle 'mxw/vim-jsx'
 NeoBundle 'othree/html5.vim'
 NeoBundle 'othree/javascript-libraries-syntax.vim'
@@ -248,7 +249,8 @@ autocmd BufReadPre *.js let b:javascript_lib_use_angularui = 1
 autocmd BufReadPre *.js let b:javascript_lib_use_requirejs = 1
 autocmd BufReadPre *.js let b:javascript_lib_use_jasmine = 0
 
-" for syntastic
+" for vim-syntastic
+let g:syntastic_check_on_open = 1
 let g:syntastic_javascript_checkers = ['jshint']
 
 " for tagbar.vim
@@ -271,6 +273,10 @@ let g:use_emmet_complete_tag = 1
 let g:user_emmet_settings = {
       \   'lang' : 'ja'
       \ }
+
+" for vim-esformatter
+nnoremap <silent> <leader>es :Esformatter<CR>
+vnoremap <silent> <leader>es :EsformatterVisual<CR>
 
 " for vim-jsdoc.vim
 let g:jsdoc_allow_input_prompt = 1
