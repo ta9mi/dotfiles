@@ -151,7 +151,7 @@ nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 
 " for ftl syntax
-au BufRead,BufNewFile *.ftl set filetype=ftl
+au BufRead,BufNewFile *.ftl set filetype=html.ftl
 
 " for jq
 command! -nargs=? Jq call s:Jq(<f-args>)
