@@ -101,7 +101,7 @@ set shiftwidth=2
 " 自動的にインデントする
 set autoindent
 set smartindent
-set indentexpr
+set indentexpr=
 " バックスペースでインデントや改行を削除できるようにする
 set backspace=2
 " パフォーマンス対策
