@@ -31,8 +31,10 @@ NeoBundle 'millermedeiros/vim-esformatter'
 NeoBundle 'mxw/vim-jsx'
 NeoBundle 'othree/html5.vim'
 NeoBundle 'othree/javascript-libraries-syntax.vim'
+NeoBundle 'osyo-manga/vim-precious'
 "NeoBundle 'pangloss/vim-javascript'
 NeoBundle 'plasticboy/vim-markdown'
+NeoBundle 'Shougo/context_filetype.vim'
 NeoBundle 'Shougo/neocomplete.vim'
 NeoBundle 'Shougo/neomru.vim'
 NeoBundle 'Shougo/unite.vim'
@@ -136,9 +138,9 @@ set ruler
 " タイトルをセットする
 set title
 "バックアップの場所
-set backupdir=~/Documents/vimbackup
+set backupdir=$HOME/vimbackup
 "swpファイルの場所
-set directory=~/Documents/vimbackup
+set directory=$HOME/vimbackup
 " .vimrcを開く
 nnoremap <Space>. :<C-u>edit $MYVIMRC<CR>
 " タブ移動
@@ -152,6 +154,13 @@ nnoremap <C-l> <C-w>l
 
 " for ftl syntax
 au BufRead,BufNewFile *.ftl set filetype=html.ftl
+
+" for vue syntax
+autocmd BufNewFile,BufRead *.vue set filetype=html
+
+" for jsx syntax
+let g:jsx_ext_required = 0
+let g:jsx_pragma_required = 1
 
 " for jq
 command! -nargs=? Jq call s:Jq(<f-args>)
