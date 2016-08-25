@@ -21,7 +21,6 @@ NeoBundle 'elzr/vim-json'
 NeoBundle 'hail2u/vim-css-syntax'
 NeoBundle 'hail2u/vim-css3-syntax'
 NeoBundle 'heavenshell/vim-jsdoc'
-NeoBundle 'jelera/vim-javascript-syntax'
 NeoBundle 'kannokanno/previm'
 NeoBundle 'Lokaltog/powerline', {'rtp' : 'powerline/bindings/vim'}
 NeoBundle 'majutsushi/tagbar'
@@ -29,10 +28,11 @@ NeoBundle 'mattn/jscomplete-vim'
 NeoBundle 'mattn/emmet-vim'
 NeoBundle 'millermedeiros/vim-esformatter'
 NeoBundle 'mxw/vim-jsx'
+NeoBundle 'othree/es.next.syntax.vim'
 NeoBundle 'othree/html5.vim'
 NeoBundle 'othree/javascript-libraries-syntax.vim'
 NeoBundle 'osyo-manga/vim-precious'
-"NeoBundle 'pangloss/vim-javascript'
+NeoBundle 'pangloss/vim-javascript'
 NeoBundle 'plasticboy/vim-markdown'
 NeoBundle 'Shougo/context_filetype.vim'
 NeoBundle 'Shougo/neocomplete.vim'
@@ -153,14 +153,13 @@ nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 
 " for ftl syntax
-au BufRead,BufNewFile *.ftl set filetype=html.ftl
+autocmd BufRead,BufNewFile *.ftl set filetype=html.ftl
 
 " for vue syntax
 autocmd BufNewFile,BufRead *.vue set filetype=html
 
 " for jsx syntax
-let g:jsx_ext_required = 0
-let g:jsx_pragma_required = 1
+autocmd BufRead,BufNewFile *.jsx set filetype=javascript.jsx
 
 " for jq
 command! -nargs=? Jq call s:Jq(<f-args>)
@@ -249,7 +248,7 @@ endif
 let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
 
 "for javascript-libraries-syntax
-let g:used_javascript_libs = 'jquery,underscore,backbone,angularjs,angularui,requirejs,jasmine'
+let g:used_javascript_libs = 'jquery,underscore,backbone,angularjs,angularui,requirejs,jasmine,React,flux'
 autocmd BufReadPre *.js let b:javascript_lib_use_jquery = 1
 autocmd BufReadPre *.js let b:javascript_lib_use_underscore = 1
 autocmd BufReadPre *.js let b:javascript_lib_use_backbone = 0
@@ -260,7 +259,7 @@ autocmd BufReadPre *.js let b:javascript_lib_use_jasmine = 0
 
 " for vim-syntastic
 let g:syntastic_check_on_open = 1
-let g:syntastic_javascript_checkers = ['jshint']
+let g:syntastic_javascript_checkers = ['jsxhint']
 
 " for tagbar.vim
 nnoremap <silent> <F9> :TagbarToggle<CR>
@@ -273,7 +272,7 @@ let g:vim_json_syntax_conceal = 0
 map <Leader>jb !python -m json.tool<CR>
 
 " for markdown
-au BufRead,BufNewFile *.md set filetype=markdown
+autocmd BufRead,BufNewFile *.md set filetype=markdown
 
 " for emmet-vim
 let g:user_emmet_mode = 'iv'
