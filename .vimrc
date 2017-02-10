@@ -21,6 +21,7 @@ NeoBundle 'elzr/vim-json'
 NeoBundle 'hail2u/vim-css-syntax'
 NeoBundle 'hail2u/vim-css3-syntax'
 NeoBundle 'heavenshell/vim-jsdoc'
+NeoBundle 'jelera/vim-javascript-syntax'
 NeoBundle 'kannokanno/previm'
 NeoBundle 'Lokaltog/powerline', {'rtp' : 'powerline/bindings/vim'}
 NeoBundle 'majutsushi/tagbar'
@@ -28,13 +29,11 @@ NeoBundle 'mattn/jscomplete-vim'
 NeoBundle 'mattn/emmet-vim'
 NeoBundle 'millermedeiros/vim-esformatter'
 NeoBundle 'mxw/vim-jsx'
-NeoBundle 'othree/es.next.syntax.vim'
 NeoBundle 'othree/html5.vim'
 NeoBundle 'othree/javascript-libraries-syntax.vim'
-NeoBundle 'osyo-manga/vim-precious'
 NeoBundle 'pangloss/vim-javascript'
 NeoBundle 'plasticboy/vim-markdown'
-NeoBundle 'Shougo/context_filetype.vim'
+NeoBundle 'posva/vim-vue'
 NeoBundle 'Shougo/neocomplete.vim'
 NeoBundle 'Shougo/neomru.vim'
 NeoBundle 'Shougo/unite.vim'
@@ -55,6 +54,10 @@ NeoBundle 'tyru/open-browser.vim'
 NeoBundle 'scrooloose/nerdtree'
 NeoBundle 'scrooloose/syntastic'
 NeoBundle 'wavded/vim-stylus'
+
+NeoBundle 'hokaccha/vim-html5validator'
+NeoBundle 'scrooloose/syntastic'
+
 call neobundle#end()
 filetype plugin indent on
 
@@ -248,18 +251,20 @@ endif
 let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
 
 "for javascript-libraries-syntax
-let g:used_javascript_libs = 'jquery,underscore,backbone,angularjs,angularui,requirejs,jasmine,React,flux'
+let g:used_javascript_libs = 'jquery,underscore,backbone,angularjs,angularui,requirejs,jasmine,react,flux'
 autocmd BufReadPre *.js let b:javascript_lib_use_jquery = 1
 autocmd BufReadPre *.js let b:javascript_lib_use_underscore = 1
-autocmd BufReadPre *.js let b:javascript_lib_use_backbone = 0
+autocmd BufReadPre *.js let b:javascript_lib_use_backbone = 1
 autocmd BufReadPre *.js let b:javascript_lib_use_angularjs = 1
 autocmd BufReadPre *.js let b:javascript_lib_use_angularui = 1
 autocmd BufReadPre *.js let b:javascript_lib_use_requirejs = 1
-autocmd BufReadPre *.js let b:javascript_lib_use_jasmine = 0
+autocmd BufReadPre *.js let b:javascript_lib_use_jasmine = 1
+autocmd BufReadPre *.js let b:javascript_lib_use_react = 1
+autocmd BufReadPre *.js let b:javascript_lib_use_flux = 1
 
 " for vim-syntastic
 let g:syntastic_check_on_open = 1
-let g:syntastic_javascript_checkers = ['jsxhint']
+let g:syntastic_javascript_checkers = ['jshint']
 
 " for tagbar.vim
 nnoremap <silent> <F9> :TagbarToggle<CR>
@@ -273,6 +278,8 @@ map <Leader>jb !python -m json.tool<CR>
 
 " for markdown
 autocmd BufRead,BufNewFile *.md set filetype=markdown
+nnoremap <silent> <C-p> :PrevimOpen<CR>
+let g:vim_markdown_folding_disable=1
 
 " for emmet-vim
 let g:user_emmet_mode = 'iv'
