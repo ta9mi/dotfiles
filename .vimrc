@@ -1,71 +1,64 @@
 set nocompatible
 filetype off
 filetype plugin indent off
-if has('vim_starting')
-  " 初回起動時のみruntimepathにneobundleのパスを指定する
-  set runtimepath+=~/.vim/bundle/neobundle.vim/
+
+
+" dein.vimの初期化
+if &compatible
+  set nocompatible
 endif
+set runtimepath+=~/.vim/dein/repos/github.com/Shougo/dein.vim
+call dein#begin(expand('~/.vim/dein'))
 
-" NeoBundleを初期化
-call neobundle#begin(expand('~/.vim/bundle/'))
-" fetch NeoBundle
-NeoBundleFetch 'Shougo/neobundle.vim'
-" install plugins
-NeoBundle 'altercation/vim-colors-solarized'
-NeoBundle 'cakebaker/scss-syntax.vim'
-NeoBundle 'chaquotay/ftl-vim-syntax'
-NeoBundle 'ctrlpvim/ctrlp.vim'
-NeoBundle 'digitaltoad/vim-jade'
-NeoBundle 'editorconfig/editorconfig-vim'
-NeoBundle 'elzr/vim-json'
-NeoBundle 'hail2u/vim-css-syntax'
-NeoBundle 'hail2u/vim-css3-syntax'
-NeoBundle 'heavenshell/vim-jsdoc'
-NeoBundle 'jelera/vim-javascript-syntax'
-NeoBundle 'kannokanno/previm'
-NeoBundle 'Lokaltog/powerline', {'rtp' : 'powerline/bindings/vim'}
-NeoBundle 'majutsushi/tagbar'
-NeoBundle 'mattn/jscomplete-vim'
-NeoBundle 'mattn/emmet-vim'
-NeoBundle 'millermedeiros/vim-esformatter'
-NeoBundle 'mxw/vim-jsx'
-NeoBundle 'othree/html5.vim'
-NeoBundle 'othree/javascript-libraries-syntax.vim'
-NeoBundle 'pangloss/vim-javascript'
-NeoBundle 'plasticboy/vim-markdown'
-NeoBundle 'posva/vim-vue'
-NeoBundle 'Shougo/neocomplete.vim'
-NeoBundle 'Shougo/neomru.vim'
-NeoBundle 'Shougo/unite.vim'
-NeoBundle 'Shougo/vimfiler.vim'
-NeoBundle 'Shougo/vimproc', {
-      \ 'build' : {
-      \     'windows' : 'make -f make_mingw32.mak',
-      \     'cygwin' : 'make -f make_cygwin.mak',
-      \     'mac' : 'make -f make_mac.mak',
-      \     'unix' : 'make -f make_unix.mak',
-      \   },
-      \ }
-NeoBundle 'Shougo/vimshell'
-NeoBundle 'sudo.vim'
-NeoBundle 'Townk/vim-autoclose'
-NeoBundle 'tpope/vim-endwise'
-NeoBundle 'tyru/open-browser.vim'
-NeoBundle 'scrooloose/nerdtree'
-NeoBundle 'scrooloose/syntastic'
-NeoBundle 'wavded/vim-stylus'
+call dein#add('Shougo/dein.vim')
 
-NeoBundle 'hokaccha/vim-html5validator'
-NeoBundle 'scrooloose/syntastic'
+call dein#add('altercation/vim-colors-solarized')
+call dein#add('cakebaker/scss-syntax.vim')
+call dein#add('chaquotay/ftl-vim-syntax')
+call dein#add('ctrlpvim/ctrlp.vim')
+call dein#add('digitaltoad/vim-jade')
+call dein#add('editorconfig/editorconfig-vim')
+call dein#add('elzr/vim-json')
+call dein#add('hail2u/vim-css-syntax')
+call dein#add('hail2u/vim-css3-syntax')
+call dein#add('heavenshell/vim-jsdoc')
+call dein#add('jelera/vim-javascript-syntax')
+call dein#add('kannokanno/previm')
+call dein#add('majutsushi/tagbar')
+call dein#add('mattn/jscomplete-vim')
+call dein#add('mattn/emmet-vim')
+call dein#add('millermedeiros/vim-esformatter')
+call dein#add('mxw/vim-jsx')
+call dein#add('othree/html5.vim')
+call dein#add('othree/javascript-libraries-syntax.vim')
+call dein#add('pangloss/vim-javascript')
+call dein#add('plasticboy/vim-markdown')
+call dein#add('posva/vim-vue')
+call dein#add('Shougo/neocomplete.vim')
+call dein#add('Shougo/neomru.vim')
+call dein#add('Shougo/unite.vim')
+call dein#add('Shougo/vimfiler.vim')
+call dein#add('Shougo/vimproc.vim', {'build': 'make'})
+call dein#add('Shougo/vimshell')
+call dein#add('sudo.vim')
+call dein#add('Townk/vim-autoclose')
+call dein#add('tpope/vim-endwise')
+call dein#add('tpope/vim-surround')
+call dein#add('tyru/open-browser.vim')
+call dein#add('scrooloose/nerdtree')
+call dein#add('scrooloose/syntastic')
+call dein#add('wavded/vim-stylus')
+call dein#add('hokaccha/vim-html5validator')
+call dein#add('scrooloose/syntastic')
 
-call neobundle#end()
+call dein#end()
+
 filetype plugin indent on
-
-NeoBundleCheck
+syntax enable
 
 " PATHの設定
 if has('gui_running')
-  let $PATH = '/usr/local/sbin:/usr/local/bin:/usr/local/share/npm/bin:/usr/local/share/python:' . $PATH
+  let $PATH = '/usr/local/sbin:/usr/local/bin:/usr/local/bin/python:' . $PATH
 endif
 " 行・列を設定する
 set sessionoptions+=resize,tabpages
@@ -298,6 +291,3 @@ let g:jsdoc_allow_input_prompt = 1
 let g:jsdoc_additional_descriptions = 1
 let g:jsdoc_default_mapping = 0
 nnoremap <silent> ,d :JsDoc<CR>
-
-" for vim-powerline
-let g:Powerline_symbols = 'fancy'
