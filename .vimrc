@@ -16,6 +16,7 @@ call dein#add('altercation/vim-colors-solarized')
 call dein#add('cakebaker/scss-syntax.vim')
 call dein#add('chaquotay/ftl-vim-syntax')
 call dein#add('ctrlpvim/ctrlp.vim')
+call dein#add('darfink/vim-plist')
 call dein#add('digitaltoad/vim-jade')
 call dein#add('editorconfig/editorconfig-vim')
 call dein#add('elzr/vim-json')
@@ -24,15 +25,24 @@ call dein#add('hail2u/vim-css3-syntax')
 call dein#add('heavenshell/vim-jsdoc')
 call dein#add('jelera/vim-javascript-syntax')
 call dein#add('kannokanno/previm')
+call dein#add('lambdalisue/vim-pyenv')
 call dein#add('majutsushi/tagbar')
 call dein#add('mattn/jscomplete-vim')
 call dein#add('mattn/emmet-vim')
 call dein#add('millermedeiros/vim-esformatter')
 call dein#add('mxw/vim-jsx')
+"call dein#add('OmniSharp/omnisharp-vim', {
+"      \   'build': {
+"      \     'windows' : 'msbuild server/OmniSharp.sln',
+"      \     'mac': 'xbuild server/OmniSharp.sln',
+"      \     'unix': 'xbuild server/OmniSharp.sln',
+"      \   },
+"      \ })
 call dein#add('othree/html5.vim')
 call dein#add('othree/javascript-libraries-syntax.vim')
 call dein#add('pangloss/vim-javascript')
 call dein#add('plasticboy/vim-markdown')
+call dein#add('pmsorhaindo/syntastic-local-eslint.vim')
 call dein#add('posva/vim-vue')
 call dein#add('Shougo/neocomplete.vim')
 call dein#add('Shougo/neomru.vim')
@@ -40,8 +50,9 @@ call dein#add('Shougo/unite.vim')
 call dein#add('Shougo/vimfiler.vim')
 call dein#add('Shougo/vimproc.vim', {'build': 'make'})
 call dein#add('Shougo/vimshell')
-call dein#add('sudo.vim')
+call dein#add('vim-scripts/sudo.vim')
 call dein#add('Townk/vim-autoclose')
+call dein#add('tpope/vim-dispatch')
 call dein#add('tpope/vim-endwise')
 call dein#add('tpope/vim-surround')
 call dein#add('tyru/open-browser.vim')
@@ -83,6 +94,8 @@ set number
 set matchtime=3
 " 折りたたみ有効
 set foldmethod=marker
+" markdownの折りたたみなし
+let g:vim_markdown_folding_disabled=1
 "nnoremap <Esc><Esc> :nohlsearch<CR>
 " 折り返しあり
 set wrap
@@ -139,6 +152,10 @@ set backupdir=$HOME/vimbackup
 set directory=$HOME/vimbackup
 " .vimrcを開く
 nnoremap <Space>. :<C-u>edit $MYVIMRC<CR>
+" sudoでhostsを開く
+nnoremap <Space>h :<C-u>edit sudo:/etc/hosts<CR>
+" tomcatのapp.logを開く
+nnoremap <Space>m :<C-u>edit /usr/local/tomcat/logs/app/app.log<CR>
 " タブ移動
 nnoremap <C-t>l gt
 nnoremap <C-t>h gT
@@ -148,12 +165,16 @@ nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 
+" for ctags
+nnoremap <Space>j :split<CR> :exe("tjump ".expand('<cword>'))<CR>
+
 " for ftl syntax
 autocmd BufRead,BufNewFile *.ftl set filetype=html.ftl
 
 " for vue syntax
-autocmd BufNewFile,BufRead *.vue set filetype=html
-
+autocmd FileType vue syntax sync fromstart
+autocmd BufRead,BufNewFile *.vue setlocal filetype=vue.html.javascript.css
+"
 " for jsx syntax
 autocmd BufRead,BufNewFile *.jsx set filetype=javascript.jsx
 
@@ -176,6 +197,7 @@ nnoremap <silent> [unite]c  :<C-u>UniteWithCurrentDir
       \ -buffer-name=files buffer file_mru bookmark file file/new<CR>
 nnoremap <silent> [unite]b  :<C-u>UniteWithBufferDir
       \ -buffer-name=files -prompt=%\  buffer file_mru bookmark file file/new<CR>
+let g:OmniSharp_selector_ui = 'unite'
 
 " for vimfiler
 call vimfiler#set_execute_file('vim', 'vim')
@@ -256,8 +278,10 @@ autocmd BufReadPre *.js let b:javascript_lib_use_react = 1
 autocmd BufReadPre *.js let b:javascript_lib_use_flux = 1
 
 " for vim-syntastic
-let g:syntastic_check_on_open = 1
-let g:syntastic_javascript_checkers = ['jshint']
+let g:syntastic_check_on_open = 0
+let g:syntastic_javascript_checkers = ['eslint']
+let g:syntastic_css_checkers = ['stylelint']
+let g:syntastic_scss_checkers = ['stylelint']
 
 " for tagbar.vim
 nnoremap <silent> <F9> :TagbarToggle<CR>
