@@ -1,7 +1,8 @@
-# exports
+# Setting PATHs
 export PATH=/usr/local/bin:$PATH
-export PATH=$HOME/.nodebrew/current/bin:$PATH
-export PATH=/Library/Frameworks/Python.framework/Versions/current/bin:$PATH
+export PATH="/usr/local/opt/ansible@1.9/bin:$PATH"
+export MONO_GAC_PREFIX="/usr/local"
+export PATH=$PATH:/Users/a12087/Library/Android/sdk/platform-tools
 
 # zstyle
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
@@ -12,9 +13,6 @@ export PATH=$PATH:$AEROMOCK_HOME
 
 # bind key like Vi
 bindkey -v
-
-# for rbenv
-eval "$(rbenv init -)"
 
 # for zsh-completions
 fpath=(/path/to/homebrew/share/zsh-completions $fpath)
