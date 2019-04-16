@@ -1,15 +1,11 @@
 # Setting PATHs
 export PATH=/usr/local/bin:$PATH
-export PATH="/usr/local/opt/ansible@1.9/bin:$PATH"
-export MONO_GAC_PREFIX="/usr/local"
-export PATH=$PATH:/Users/a12087/Library/Android/sdk/platform-tools
+
+# set prompt
+PROMPT='%m:%c %n$ '
 
 # zstyle
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
-
-# Aeromock
-AEROMOCK_HOME=~/.aeromock/applications/current
-export PATH=$PATH:$AEROMOCK_HOME
 
 # bind key like Vi
 bindkey -v
@@ -19,5 +15,9 @@ fpath=(/path/to/homebrew/share/zsh-completions $fpath)
 autoload -U compinit
 compinit -u
 
-# set prompt
-PROMPT='%m:%c %n$ '
+# for anyenv
+if [ -f ~/.anyenv/bin/anyenv ]; then
+  export PATH="$HOME/.anyenv/bin:$PATH"
+  eval "$(anyenv init -)"
+  alias brew="env PATH=${PATH/\/Users\/${USER}\/.anyenv\/envs\/*env\/shims:/} brew"
+fi

@@ -20,6 +20,7 @@ call dein#add('darfink/vim-plist')
 call dein#add('digitaltoad/vim-jade')
 call dein#add('editorconfig/editorconfig-vim')
 call dein#add('elzr/vim-json')
+call dein#add('fatih/vim-go')
 call dein#add('hail2u/vim-css-syntax')
 call dein#add('hail2u/vim-css3-syntax')
 call dein#add('heavenshell/vim-jsdoc')
@@ -69,7 +70,7 @@ syntax enable
 
 " PATHの設定
 if has('gui_running')
-  let $PATH = '/usr/local/sbin:/usr/local/bin:/usr/local/bin/python:' . $PATH
+  let $PATH = '/usr/local/sbin:/usr/local/bin:' .
 endif
 " 行・列を設定する
 set sessionoptions+=resize,tabpages
@@ -147,9 +148,9 @@ set ruler
 " タイトルをセットする
 set title
 "バックアップの場所
-set backupdir=$HOME/vimbackup
+set backupdir=$HOME/.vim/backup
 "swpファイルの場所
-set directory=$HOME/vimbackup
+set directory=$HOME/.vim/backup
 " .vimrcを開く
 nnoremap <Space>. :<C-u>edit $MYVIMRC<CR>
 " sudoでhostsを開く
@@ -166,7 +167,7 @@ nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 
 " for ctags
-nnoremap <Space>j :split<CR> :exe("tjump ".expand('<cword>'))<CR>
+nnoremap <Space>j :exe("tjump ".expand('<cword>'))<CR> :split<CR>
 
 " for ftl syntax
 autocmd BufRead,BufNewFile *.ftl set filetype=html.ftl
