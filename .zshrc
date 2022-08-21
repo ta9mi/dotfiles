@@ -11,7 +11,7 @@ zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
 bindkey -v
 
 # for zsh-completions
-fpath=(/path/to/homebrew/share/zsh-completions $fpath)
+fpath=(/usr/local/share/zsh-completions $fpath)
 autoload -U compinit
 compinit -u
 
